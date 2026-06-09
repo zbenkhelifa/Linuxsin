@@ -15,7 +15,7 @@ jobs:
           sed -i "s/REMPLACE-PAR-TA-CLE-BREVO/${{ secrets.BREVO_KEY }}/g" index.html
           sed -i "s/REMPLACE-PAR-TA-CLE-WEB3FORMS/${{ secrets.WEB3FORMS_KEY }}/g" index.html
           sed -i "s/REMPLACE-PAR-TON-EMAIL/${{ secrets.BREVO_SENDER }}/g" index.html
-          sed -i "s|REMPLACE-PAR-TON-PSEUDO|${{ secrets.GITHUB_PSEUDO }}|g" index.html
+          sed -i "s|REMPLACE-PAR-TON-PSEUDO|${{ secrets.GH_PSEUDO }}|g" index.html
 
       - name: 📦 Install Firebase tools
         run: npm install -g firebase-tools
