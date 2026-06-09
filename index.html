@@ -1026,13 +1026,14 @@
       });
 
       // 2. Email élève via Cloudflare Worker (clé Brevo sécurisée côté serveur)
-      const res = await fetch(WORKER_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-
-      if (!res.ok) throw new Error('Worker error');
+      if (!WORKER_URL.includes('REMPLACE')) {
+        const res = await fetch(WORKER_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        if (!res.ok) throw new Error('Worker error');
+      }
 
       input.closest('.hero-form, .final-form').style.display = 'none';
       confirm.style.display = 'block';
