@@ -1,6 +1,6 @@
 # 📊 Résultats LinuxSIN
 
-> Mis à jour le 09/06/2026 à 21:28 (UTC)
+> Mis à jour le 09/06/2026 à 21:32 (UTC)
 
 | TP | Intitulé | Score |
 |:---:|---|:---:|
