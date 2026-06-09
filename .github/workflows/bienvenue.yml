@@ -1,0 +1,28 @@
+name: ✅ Vérification TP0
+
+on:
+  push:
+    paths:
+      - 'je_suis_pret.md'
+
+jobs:
+  bienvenue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🎉 Bienvenue
+        run: |
+          echo "════════════════════════════════════════"
+          echo "   BIENVENUE DANS LES TP LINUX SIN !"
+          echo "════════════════════════════════════════"
+          PRENOM=$(grep -i "prenom" je_suis_pret.md | head -1 | sed 's/.*: *//' | tr -d '\r')
+          if [ -n "$PRENOM" ] && [ "$PRENOM" != "..." ]; then
+            echo "  Bonjour $PRENOM ! 👋"
+          else
+            echo "  ⚠️  N'oublie pas de remplacer les ... par ton prénom !"
+          fi
+          echo ""
+          echo "  ✅ TP0 validé !"
+          echo "  👉 Prochaine étape : fork le repo linuxsin-tp1"
+          echo "════════════════════════════════════════"
