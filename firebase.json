@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "TON-PROJECT-ID",
+    "site": "linuxsin",
     "public": ".",
     "ignore": [
       "firebase.json",
