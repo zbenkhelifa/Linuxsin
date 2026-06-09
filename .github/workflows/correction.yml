@@ -1,0 +1,90 @@
+name: Correction LinuxSIN
+
+on:
+  push:
+    branches: ["**"]
+
+permissions:
+  contents: write
+
+jobs:
+  correction:
+    name: Correction automatique
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: TP0 — Mise en route
+        run: bash tp0/tp0.sh 2>&1 | tee /tmp/tp0.log || true
+
+      - name: TP1 — Navigation et fichiers
+        run: bash tp1/tp1.sh 2>&1 | tee /tmp/tp1.log || true
+
+      - name: TP2 — Permissions
+        run: bash tp2/tp2.sh 2>&1 | tee /tmp/tp2.log || true
+
+      - name: TP3 — Scripts bash
+        run: bash tp3/tp3.sh 2>&1 | tee /tmp/tp3.log || true
+
+      - name: TP4 — Réseau
+        run: bash tp4/tp4.sh 2>&1 | tee /tmp/tp4.log || true
+
+      - name: TP5 — Mini-projet
+        run: bash tp5/tp5.sh 2>&1 | tee /tmp/tp5.log || true
+
+      - name: Résumé et sauvegarde
+        if: always()
+        run: |
+          declare -A TITRES=(
+            [0]="Mise en route"
+            [1]="Navigation et fichiers"
+            [2]="Permissions"
+            [3]="Scripts bash"
+            [4]="Réseau"
+            [5]="Mini-projet"
+          )
+
+          extract_score() {
+            local log="$1"
+            [ -f "$log" ] && grep -oP 'Score TP[0-9]+ : \K[0-9]+ / [0-9]+' "$log" | tail -1 || echo "—"
+          }
+
+          # ── GitHub Step Summary (visible dans l'onglet Actions) ──
+          {
+            echo "# 📊 Résultats LinuxSIN"
+            echo ""
+            echo "| TP | Intitulé | Score |"
+            echo "|:---:|---|:---:|"
+            for n in 0 1 2 3 4 5; do
+              score=$(extract_score "/tmp/tp${n}.log")
+              echo "| TP${n} | ${TITRES[$n]} | ${score} |"
+            done
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          # ── RESULTATS.md (visible dans le repo de l'élève) ──
+          {
+            echo "# 📊 Résultats LinuxSIN"
+            echo ""
+            echo "> Mis à jour le $(date '+%d/%m/%Y à %H:%M') (UTC)"
+            echo ""
+            echo "| TP | Intitulé | Score |"
+            echo "|:---:|---|:---:|"
+            for n in 0 1 2 3 4 5; do
+              score=$(extract_score "/tmp/tp${n}.log")
+              echo "| TP${n} | ${TITRES[$n]} | ${score} |"
+            done
+            echo ""
+            echo "---"
+            echo "Corrigé automatiquement par GitHub Actions sur Ubuntu."
+          } > RESULTATS.md
+
+          git config user.email "github-actions@github.com"
+          git config user.name "LinuxSIN Bot"
+          git add RESULTATS.md
+          git diff --cached --quiet && echo "Pas de changement." && exit 0
+          git commit -m "📊 Résultats mis à jour [skip ci]"
+          git pull --rebase origin "${{ github.ref_name }}" || true
+          git push || true

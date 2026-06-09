@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head> 
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LinuxSIN — Maîtrise Linux en 5 semaines</title>
@@ -767,7 +767,7 @@
       <div class="tp-content">
         <h3>Scripts bash</h3>
         <p>Variables, conditions, boucles, fonctions — automatiser des tâches répétitives avec de vrais scripts.</p>
-        <span class="tp-tag paid">Accès complet</span>
+        <span class="tp-tag free">Gratuit</span>
       </div>
     </div>
     <div class="tp-card">
@@ -775,7 +775,7 @@
       <div class="tp-content">
         <h3>Réseau et protocoles</h3>
         <p>ping, curl, wget, netstat — interroger des APIs, analyser le trafic réseau, comprendre HTTP depuis le terminal.</p>
-        <span class="tp-tag paid">Accès complet</span>
+        <span class="tp-tag free">Gratuit</span>
       </div>
     </div>
     <div class="tp-card">
@@ -783,7 +783,7 @@
       <div class="tp-content">
         <h3>Mini-projet</h3>
         <p>Un script bash complet qui interroge une API, traite les données et génère un rapport — comme un vrai projet SIN.</p>
-        <span class="tp-tag paid">Accès complet</span>
+        <span class="tp-tag free">Gratuit</span>
       </div>
     </div>
   </div>
@@ -822,38 +822,19 @@
 <!-- PRICING -->
 <div class="pricing-wrap">
   <div class="pricing-inner">
-    <p class="section-label">// tarifs</p>
-    <h2>Simple. Transparent.</h2>
-    <p style="color:var(--muted); margin-top:12px;">2 mois pour tester à ton rythme. Si la formation t'a aidé, tu débloques l'accès complet.</p>
+    <p class="section-label">// accès</p>
+    <h2>Gratuit. Pour tous mes élèves.</h2>
+    <p style="color:var(--muted); margin-top:12px;">La formation est offerte. Aucune carte bancaire, aucun paiement.</p>
 
-    <div class="pricing-cards">
-      <!-- Gratuit -->
-      <div class="price-card">
-        <p class="price-label">Essai gratuit</p>
-        <div class="price-amount">
-          <span class="big">0<span class="currency">€</span></span>
-        </div>
-        <p class="price-desc">2 mois d'accès. Sans carte bancaire. Annulable à tout moment.</p>
-        <ul class="price-features">
-          <li>TP0 — Mise en route</li>
-          <li>TP1 — Navigation et fichiers</li>
-          <li>TP2 — Permissions</li>
-          <li class="muted">TP3 — Scripts bash</li>
-          <li class="muted">TP4 — Réseau</li>
-          <li class="muted">TP5 — Mini-projet</li>
-        </ul>
-        <a href="#inscription" class="price-btn secondary">Commencer gratuitement</a>
-      </div>
-
-      <!-- Complet -->
+    <div class="pricing-cards" style="grid-template-columns: 1fr; max-width: 420px; margin-top: 48px;">
       <div class="price-card featured">
-        <div class="price-badge">Accès complet</div>
+        <div class="price-badge">Gratuit</div>
         <p class="price-label">Formation complète</p>
         <div class="price-amount">
-          <span class="strike">// PRICE = undefined</span>
-          <span class="big">199<span class="currency">€</span></span>
+          <span class="strike">199€</span>
+          <span class="big">0<span class="currency">€</span></span>
         </div>
-        <p class="price-desc">Paiement unique. Accès à vie aux 5 TP + mises à jour futures.</p>
+        <p class="price-desc">Accès à tous les TP pendant 2 mois. Sans carte bancaire.</p>
         <ul class="price-features">
           <li>TP0 — Mise en route</li>
           <li>TP1 — Navigation et fichiers</li>
@@ -862,7 +843,7 @@
           <li>TP4 — Réseau</li>
           <li>TP5 — Mini-projet</li>
         </ul>
-        <a href="#inscription" class="price-btn primary">Commencer — 2 mois gratuits</a>
+        <a href="#inscription" class="price-btn primary">Commencer gratuitement</a>
       </div>
     </div>
   </div>
@@ -900,7 +881,7 @@
           Que se passe-t-il après les 2 mois gratuits ?
           <span class="faq-arrow">▶</span>
         </button>
-        <div class="faq-a">Tu reçois un email avant la fin de la période. Si tu veux continuer avec les TP3, TP4 et TP5, tu passes à l'accès complet pour 199 €. Sinon, tu gardes l'accès aux TP0, TP1 et TP2 sans limite de temps.</div>
+        <div class="faq-a">Tu reçois un email avant la fin de la période. L'accès peut être renouvelé gratuitement — contacte directement ton enseignant.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">
@@ -1000,85 +981,16 @@
   }
 
   // ══════════════════════════════════════════
-  //  CONFIG — remplace les 4 valeurs ici
+  //  CONFIG
   // ══════════════════════════════════════════
 
-  // 1. web3forms.com → "Get your Access Key"
-  const WEB3FORMS_KEY  = 'REMPLACE-PAR-TA-CLE-WEB3FORMS';
+  // 1. web3forms.com → "Get your Access Key" (clé publique, OK côté client)
+  const WEB3FORMS_KEY = 'REMPLACE-PAR-TA-CLE-WEB3FORMS';
 
-  // 2. app.brevo.com → SMTP & API → API Keys → Generate
-  const BREVO_KEY      = 'REMPLACE-PAR-TA-CLE-BREVO';
-
-  // 3. Ton email vérifié sur Brevo (Settings → Senders)
-  const BREVO_SENDER   = 'REMPLACE-PAR-TON-EMAIL';
-
-  // 4. Lien vers ton repo TP0 sur GitHub
-  const CLASSROOM_LINK = 'https://github.com/REMPLACE-PAR-TON-PSEUDO/linuxsin-tp0';
+  // 2. URL de ton Cloudflare Worker (après `npx wrangler deploy`)
+  const WORKER_URL = 'https://linuxsin-signup.REMPLACE.workers.dev';
 
   // ══════════════════════════════════════════
-
-  async function envoyerEmailEleve(email) {
-    const html = `
-      <div style="font-family:monospace;max-width:600px;margin:0 auto;background:#0D0D0D;color:#F5F5F0;padding:32px;border-radius:4px;">
-        <h1 style="color:#00FF88;font-size:1.4rem;margin-bottom:8px;">🐧 Bienvenue sur LinuxSIN !</h1>
-        <p style="color:#8A8A8A;margin-bottom:24px;">Ta formation Linux commence maintenant.</p>
-
-        <p style="margin-bottom:16px;">Voici ton lien pour démarrer le TP0 :</p>
-        <a href="${CLASSROOM_LINK}"
-           style="display:inline-block;background:#00FF88;color:#0D0D0D;padding:12px 24px;font-weight:700;text-decoration:none;margin-bottom:24px;">
-          👉 Accéder au TP0
-        </a>
-
-        <hr style="border-color:#2A2A2A;margin:24px 0;">
-
-        <p style="color:#8A8A8A;margin-bottom:8px;">Comment démarrer :</p>
-        <ol style="color:#F5F5F0;line-height:2;">
-          <li>Clique sur le lien ci-dessus</li>
-          <li>Crée ton compte GitHub si tu n'en as pas encore</li>
-          <li>Fork le repo → tu as ta copie personnelle</li>
-          <li>Lis le TP0 en premier — il explique tout</li>
-        </ol>
-
-        <hr style="border-color:#2A2A2A;margin:24px 0;">
-
-        <p style="color:#8A8A8A;margin-bottom:8px;">Ce que tu vas apprendre :</p>
-        <table style="width:100%;color:#F5F5F0;line-height:2;">
-          <tr><td style="color:#00FF88;">TP0</td><td>Mise en route</td></tr>
-          <tr><td style="color:#00FF88;">TP1</td><td>Navigation et fichiers Linux</td></tr>
-          <tr><td style="color:#00FF88;">TP2</td><td>Permissions et utilisateurs</td></tr>
-          <tr><td style="color:#00FF88;">TP3</td><td>Scripts bash</td></tr>
-          <tr><td style="color:#00FF88;">TP4</td><td>Réseau et protocoles</td></tr>
-          <tr><td style="color:#00FF88;">TP5</td><td>Mini-projet complet</td></tr>
-        </table>
-
-        <hr style="border-color:#2A2A2A;margin:24px 0;">
-        <p style="color:#8A8A8A;font-size:0.85rem;">
-          2 mois d'accès gratuit · sans carte bancaire<br>
-          — L'équipe LinuxSIN
-        </p>
-      </div>
-    `;
-
-    const res = await fetch('https://api.brevo.com/v3/smtp/email', {
-      method: 'POST',
-      headers: {
-        'api-key': BREVO_KEY,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        sender: { email: BREVO_SENDER, name: 'LinuxSIN' },
-        to: [{ email }],
-        subject: '🐧 Ton accès LinuxSIN — commence ici !',
-        htmlContent: html
-      })
-    });
-
-    if (!res.ok) {
-      const err = await res.json();
-      console.error('Brevo error:', err);
-      throw new Error('Brevo failed');
-    }
-  }
 
   // ── Signup ──
   async function handleSignup(inputId, confirmId) {
@@ -1113,10 +1025,15 @@
         })
       });
 
-      // 2. Email avec le lien pour l'élève via Brevo
-      await envoyerEmailEleve(email);
+      // 2. Email élève via Cloudflare Worker (clé Brevo sécurisée côté serveur)
+      const res = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
 
-      // Succès
+      if (!res.ok) throw new Error('Worker error');
+
       input.closest('.hero-form, .final-form').style.display = 'none';
       confirm.style.display = 'block';
 

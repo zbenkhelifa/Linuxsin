@@ -1,0 +1,15 @@
+name = "linuxsin-signup"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# Remplace par le lien vers ton repo TP0 GitHub Classroom
+CLASSROOM_LINK = "https://github.com/REMPLACE-PAR-TON-PSEUDO/linuxsin-tp0"
+# Domaine de ta landing page (ex: linuxsin.fr) — évite les appels cross-origin non autorisés
+ALLOWED_ORIGIN = "*"
+
+# BREVO_KEY et BREVO_SENDER sont des secrets — ne jamais les mettre ici
+# Les ajouter avec :
+#   npx wrangler secret put BREVO_KEY
+#   npx wrangler secret put BREVO_SENDER
