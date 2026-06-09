@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "TON-PROJECT-ID",
     "public": ".",
     "ignore": [
       "firebase.json",
