@@ -983,14 +983,63 @@
   // ══════════════════════════════════════════
   //  CONFIG
   // ══════════════════════════════════════════
-
-  // 1. web3forms.com → "Get your Access Key" (clé publique, OK côté client)
-  const WEB3FORMS_KEY = 'REMPLACE-PAR-TA-CLE-WEB3FORMS';
-
-  // 2. URL de ton Cloudflare Worker (après `npx wrangler deploy`)
-  const WORKER_URL = 'https://linuxsin-signup.REMPLACE.workers.dev';
-
+  //  Ces valeurs sont remplacées par deploy.yml avant le déploiement Firebase
   // ══════════════════════════════════════════
+  const WEB3FORMS_KEY  = 'REMPLACE-PAR-TA-CLE-WEB3FORMS';
+  const BREVO_KEY      = 'REMPLACE-PAR-TA-CLE-BREVO';
+  const BREVO_SENDER   = 'REMPLACE-PAR-TON-EMAIL';
+  const CLASSROOM_LINK = 'https://github.com/REMPLACE-PAR-TON-PSEUDO/linuxsin-tp0';
+  // ══════════════════════════════════════════
+
+  async function envoyerEmailEleve(email) {
+    const html = `
+      <div style="font-family:monospace;max-width:600px;margin:0 auto;background:#0D0D0D;color:#F5F5F0;padding:32px;border-radius:4px;">
+        <h1 style="color:#00FF88;font-size:1.4rem;margin-bottom:8px;">🐧 Bienvenue sur LinuxSIN !</h1>
+        <p style="color:#8A8A8A;margin-bottom:24px;">Ta formation Linux commence maintenant.</p>
+        <p style="margin-bottom:16px;">Voici ton lien pour démarrer le TP0 :</p>
+        <a href="${CLASSROOM_LINK}"
+           style="display:inline-block;background:#00FF88;color:#0D0D0D;padding:12px 24px;font-weight:700;text-decoration:none;margin-bottom:24px;">
+          👉 Accéder au TP0
+        </a>
+        <hr style="border-color:#2A2A2A;margin:24px 0;">
+        <p style="color:#8A8A8A;margin-bottom:8px;">Comment démarrer :</p>
+        <ol style="color:#F5F5F0;line-height:2;">
+          <li>Clique sur le lien ci-dessus</li>
+          <li>Crée ton compte GitHub si tu n'en as pas encore</li>
+          <li>Fork le repo → tu as ta copie personnelle</li>
+          <li>Lis le TP0 en premier — il explique tout</li>
+        </ol>
+        <hr style="border-color:#2A2A2A;margin:24px 0;">
+        <p style="color:#8A8A8A;margin-bottom:8px;">Ce que tu vas apprendre :</p>
+        <table style="width:100%;color:#F5F5F0;line-height:2;">
+          <tr><td style="color:#00FF88;">TP0</td><td>Mise en route</td></tr>
+          <tr><td style="color:#00FF88;">TP1</td><td>Navigation et fichiers Linux</td></tr>
+          <tr><td style="color:#00FF88;">TP2</td><td>Permissions et utilisateurs</td></tr>
+          <tr><td style="color:#00FF88;">TP3</td><td>Scripts bash</td></tr>
+          <tr><td style="color:#00FF88;">TP4</td><td>Réseau et protocoles</td></tr>
+          <tr><td style="color:#00FF88;">TP5</td><td>Mini-projet complet</td></tr>
+        </table>
+        <hr style="border-color:#2A2A2A;margin:24px 0;">
+        <p style="color:#8A8A8A;font-size:0.85rem;">Accès gratuit · sans carte bancaire<br>— L'équipe LinuxSIN</p>
+      </div>`;
+
+    const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: { 'api-key': BREVO_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sender: { email: BREVO_SENDER, name: 'LinuxSIN' },
+        to: [{ email }],
+        subject: '🐧 Ton accès LinuxSIN — commence ici !',
+        htmlContent: html
+      })
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      console.error('Brevo error:', err);
+      throw new Error('Brevo failed');
+    }
+  }
 
   // ── Signup ──
   async function handleSignup(inputId, confirmId) {
@@ -1025,15 +1074,8 @@
         })
       });
 
-      // 2. Email élève via Cloudflare Worker (clé Brevo sécurisée côté serveur)
-      if (!WORKER_URL.includes('REMPLACE')) {
-        const res = await fetch(WORKER_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
-        });
-        if (!res.ok) throw new Error('Worker error');
-      }
+      // 2. Email avec le lien TP0 pour l'élève via Brevo
+      await envoyerEmailEleve(email);
 
       input.closest('.hero-form, .final-form').style.display = 'none';
       confirm.style.display = 'block';
